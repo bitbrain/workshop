@@ -80,13 +80,20 @@ This milestone will unlock additional revenue streams by launching in more count
 
 ## Team Composition
 
-Disclaimer: The team composition assumes that this product is being built as part of a small startup that already hired other functions such as HR, Sales and Marketing. This composition focuses purely on the development & rollout of this feature.
+> Disclaimer: The team composition assumes that this product is being built as part of a small startup that already hired other functions such as HR, Sales and Marketing. This composition focuses purely on the development & rollout of this feature.
 
 **The Team:**
 
-- **Product Owner**: Responsible for organising stakeholder demos and keeping the backlog in shape and order. Will be in close collaboration with both the **Techlead** but also **Sales** and **Marketing** to ensure rollout of features is communicated properly. Should have experience with community building and organizing workshops already. A plus here would be some technical knowledge with UX design and SQL (but not a must).
+- **Product Engineer**: Responsible for organising stakeholder demos and keeping the backlog in shape and order. Will be in close collaboration with both the **Techlead** but also **Sales** and **Marketing** to ensure rollout of features is communicated properly. Should have experience with community building and organizing workshops already. A plus here would be some technical knowledge with UX design and SQL (but not a must). Also, should bring UX experience and be able to produce designs and give direct input on pull requests for any given feature.
 - **Techlead**: responsible for collaborating closely with the product owner to ensure architecture and domain design is aligned with product needs. Also, responsible for identifying bottlenecks during development of features.
-- **2x Senior Engineer**: responsible for building the backend system and frontend, including the API Gateway and REST contract, entity service and database setup. Also, responsible for setting up cloud infrastructure. Works closely together with **Techlead**
+- **2x Software Engineer (Senior)**: responsible for building the backend system and frontend, including the API Gateway and REST contract, entity service and database setup. Also, responsible for setting up cloud infrastructure. Works closely together with **Techlead**. Should be interested in product development too and not shy away from talking to the product owner or UX designer.
+- **1x Software Engineer (Mid)** helps building new functionality and features and primarily focuses on building business logic for both frontend and backend.
+
+**Explanation:**
+
+The idea is to minimise time to market and maximise velocity. Therefore, time cannot spent on mentoring and onboarding originally, so the team will be kept small but efficient. To avoid disruption due to illness or other factors, there are a total of 3 engineers required. This is crucial, especially for QA purposes.
+
+Also note that there are some familiar roles missing here: this team does not hire a dedicated **QA engineer** but instead engineers will ensure through automated end-to-end tests that the quality of the product is ensured. Another role not present is a **DevOps engineer** - engineers of this team will be responsible to setup the infrastructure themselves. 
 
 ## Time / scope / budget planning
 
@@ -94,4 +101,42 @@ todo
 
 ## Technology considerations
 
-todo
+### Goals
+
+The following goals are considered for the technologies chosen:
+
+1. fast development cycles: Classical handover between 'frontend' and 'backend' should be avoided
+2. not too many technologies: hiring is more difficult if too many exotic programming languages are being employed
+3. mature ecosystem: while fancy new tech feels nice to work with, the goal here is to create robust (and resilient) software. Therefore, the technologies chosen should come with a mature ecosystem underneath, meaning that there is community support, good documentation, stable releases and quick time to address security issues
+4. easy to maintain: the technologies should all be maintainable in code, as anything that is committed to a repository can be shared, and changes have a track record. This means that the goal is to maximise the setup in version control and minimise manual setup
+
+### Technology Stack
+
+- **React** to allow for consistent state in the UI, [React](https://react.dev/) is being employed
+- **Tailwind.css** for fast styling of components. It is especially great for trying out new ideas very quickly, without having to navigate through .scss or .sass files
+- **Typescript** for type-safety. While initially, vanilla JS may be faster to write, [typescript](https://www.typescriptlang.org/) comes with a great ecosystem and allows for **Documentation As Code**. Also, Javascript is a widely known programming languages and many fullstack/Java engineers know Javascript, too.
+- **Github**: all repositories will be stored in a dedicated Github organization. Some useful features that allow us to move fast: Github actions, Github packages, Github project management and issue tracking (for kanban board)
+  - **Github Packages** we may depend on custom tools and libraries that we do not want to expose to the internet. [Github packages](https://github.com/features/packages) in private repos will allow us to push docker images and .jar dependencies to it so we can use them internally.
+- **Docker**: docker is used for local development but also to push images to [Github packages](https://github.com/features/packages). However, developers will use [Rancher](https://www.rancher.com/) locally rather than **Docker for Desktop** to dodge the Docker fees.
+- **Java 21 + Spring Boot 3** Java is a powerful programming language with [customizable garbage collection](https://www.baeldung.com/jvm-garbage-collectors), a very mature ecosystem and modern language features thanks to [Java 21](https://blogs.oracle.com/java/post/the-arrival-of-java-21).
+  - **Jib** to build docker images without a docker daemon. [Jib](https://cloud.google.com/java/getting-started/jib) is a powerful tool invented by Google that allows you to build + push optimised Java images without the need to setup docker on your CI environment.
+  - **Gradle** for dependency management. [Gradle](https://gradle.org/) is the defacto Gold standard of dependency management in Java and similar to npm is responsible for downloading and syncing dependencies.
+- **Terraform** for infrastructure setup: [Terraform](https://www.terraform.io/) is powerful to maintain any infrastructure at scale and shall be used to store Infrastructure as Code.
+- **Vault** this project requires storing a lot of secret information, such as API keys and credentials. Those should never be committed to version control - instead, it will be stored in [Vault](https://www.vaultproject.io/) which Terraform neatly integrates with.
+- **MySQL 8** this product uses MySQL 8 which comes with powerful indexing algorithms and is natively supported by Amazon RDS.
+- **Amazon Web Services** this project will be deployed to Amazon Web Services. With its cloud architecture we can deploy our stack into various datacenter regions all around the globe to minimise latency. Originally using the `eu-west-1` location:
+  - [AWS Fargate](https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html) for containerization of apps. Fargate is slightly more expensive than ECS (but can be still cheaper than running a fully fledged Kubernetes cluster): 
+    1. no need to manage any infrastructure. This also means no need to manage scaling EC2 groups up or down depending on load. Fargate manages that
+    2. faster setup. Rather than spending time both building a complicated deployment setup, Fargate takes away that pain
+    3. neat integration into other AWS services: we want to potentially harness other services such as Amazon S3 for blob storage, Route53 for domain routing setup and EC2 for load balancing and WAF DDOS protection
+  - [WAF](https://aws.amazon.com/waf/) by Amazon allows us to get DDOS protection out of the box. This also ensures that our backend only processes requests that are actually useful and improves security.
+  - [Virtual Private Cloud (VPC)](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html) is used for subnetting and configuring our IP ranges for the services.
+  - [Amazon RDS](https://aws.amazon.com/free/database) is used as our database solution of choice, configured with MySQL 8.
+  - [Amazon Neptune](https://aws.amazon.com/neptune/) is a powerful graph-database that we can utilise to build our interests graph of all our users and make smart decisions about it.
+  - [Amazon Amplify](https://aws.amazon.com/amplify/authentication/) amplify allows for user management and authentication, including [React client](https://docs.amplify.aws/react/start/getting-started/introduction/) and JWT authentication and verification [through Cognito](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-verifying-a-jwt.html).
+  - [Amazon Cloudwatch](https://aws.amazon.com/cloudwatch/) is used to push application logs to by the applications. This is especially important to debug production issues, e.g. by enriching logs with trace ids.
+  - [Amazon Prometheus](https://aws.amazon.com/prometheus/) is a powerful tool for application monitoring. While we use Cloudwatch to get detailed logs, we want to also be able to have dashboards & metrics on our application behaviour, as well as alerting via [Alert Manager](https://prometheus.io/docs/alerting/latest/alertmanager/).
+- **Grafana** for application dashboards and highlighting important metrics. It also integrates into Google Analytics and Prometheus, allowing us to cross-reference events and behaviour, e.g. during an outage we can see in realtime what impact that might have on user behaviour.
+- **GPT OpenAPI** access is required so we can utilise its API for our custom chatbot.
+- **Google Analytics** is used for reporting on user metrics and usage behaviour. [Google Analytics](https://marketingplatform.google.com/intl/en_uk/about/analytics/) is set up in the frontend (with opt-in cookie consent banner) to send usage metrics to Google that will be useful to us to make UX decisions.
+- **PagerDuty** (optional) once we have configured alerts via AlertManager in Prometheus, we also want to know when our app goes down. This becomes especially important once we launch in multiple regions, as there could be issues at 3am local time and one of our engineers would need to be woken up to have a look.
