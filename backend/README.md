@@ -2,9 +2,9 @@
 
 This is the backend providing a REST API for the workshop system.
 
-Ensure to set the `OPENAI_API_KEY` locally as an environment variable to make use of the AI driven activity generation.
-
-[Learn here how to generate an API key](https://platform.openai.com/docs/quickstart?context=python).
+> Ensure to set the `OPENAI_API_KEY` locally as an environment variable to make use of the AI driven activity generation.
+>
+> [Learn here how to generate an API key](https://platform.openai.com/docs/quickstart?context=python).
 
 ## Run locally (full docker)
 
