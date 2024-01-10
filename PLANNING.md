@@ -136,6 +136,11 @@ The following goals are considered for the technologies chosen:
 - **Google Analytics** is used for reporting on user metrics and usage behaviour. [Google Analytics](https://marketingplatform.google.com/intl/en_uk/about/analytics/) is set up in the frontend (with opt-in cookie consent banner) to send usage metrics to Google that will be useful to us to make UX decisions.
 - **PagerDuty** (optional) once we have configured alerts via AlertManager in Prometheus, we also want to know when our app goes down. This becomes especially important once we launch in multiple regions, as there could be issues at 3am local time and one of our engineers would need to be woken up to have a look.
 
+### Development Approach
+
+- Milestone based kanban style
+- Developers write and pickup tickets themselves with assistance of Product Engineer to prioritise things
+- Programming principles to be considered: Clean Code where applicable (pragmatic approach, not theoretical approach), prefer component testing (snapshots) & e2e over unit testing to save time but write unit tests for critical components where needed. Composition over inheritance. Avoid design patterns and over engineering if possible - keep it simple!
 
 ## Time / scope / budget planning
 
