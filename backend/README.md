@@ -20,6 +20,14 @@ This is the backend providing a REST API for the workshop system.
 
 To access the REST API, query `http://localhost:8080` and visit [localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html) for API docs.
 
+## Functionality
+
+This is a _Proof of Concept_ backend app that serves a REST API. The functionality exposed through the API is as follows:
+
+- creating, updating and deactivating users
+- creating, updating and cancelling workshops
+- signing up to workshops
+
 ## Technologies used
 
 - Spring Boot 3
