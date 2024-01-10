@@ -80,24 +80,19 @@ This milestone will unlock additional revenue streams by launching in more count
 
 ## Team Composition
 
-> Disclaimer: The team composition assumes that this product is being built as part of a small startup that already hired other functions such as HR, Sales and Marketing. This composition focuses purely on the development & rollout of this feature.
+> Disclaimer: The team composition assumes that this product is being built as part of a small startup that already hired other functions such as HR, Sales and Marketing. This composition focuses purely on the development & rollout of this feature. This also assumes all employees work remotely to save office cost and allow for a more diverse hiring pool.
 
 **The Team:**
 
-- **Product Engineer**: Responsible for organising stakeholder demos and keeping the backlog in shape and order. Will be in close collaboration with both the **Techlead** but also **Sales** and **Marketing** to ensure rollout of features is communicated properly. Should have experience with community building and organizing workshops already. A plus here would be some technical knowledge with UX design and SQL (but not a must). Also, should bring UX experience and be able to produce designs and give direct input on pull requests for any given feature.
-- **Techlead**: responsible for collaborating closely with the product owner to ensure architecture and domain design is aligned with product needs. Also, responsible for identifying bottlenecks during development of features.
+- **Senior Product Engineer**: Responsible for organising stakeholder demos and keeping the backlog in shape and order. Will be in close collaboration with both the **Techlead** but also **Sales** and **Marketing** to ensure rollout of features is communicated properly. Should have experience with community building and organizing workshops already. A plus here would be some technical knowledge with UX design and SQL (but not a must). Also, should bring UX experience and be able to produce designs and give direct input on pull requests for any given feature.
+- **Techlead**: responsible for collaborating closely with the product owner to ensure architecture and domain design is aligned with product needs. Also, responsible for identifying bottlenecks during development of features. Also writes code on a daily basis, especially during the beginning of the project.
 - **2x Software Engineer (Senior)**: responsible for building the backend system and frontend, including the API Gateway and REST contract, entity service and database setup. Also, responsible for setting up cloud infrastructure. Works closely together with **Techlead**. Should be interested in product development too and not shy away from talking to the product owner or UX designer.
-- **1x Software Engineer (Mid)** helps building new functionality and features and primarily focuses on building business logic for both frontend and backend.
 
 **Explanation:**
 
 The idea is to minimise time to market and maximise velocity. Therefore, time cannot spent on mentoring and onboarding originally, so the team will be kept small but efficient. To avoid disruption due to illness or other factors, there are a total of 3 engineers required. This is crucial, especially for QA purposes.
 
 Also note that there are some familiar roles missing here: this team does not hire a dedicated **QA engineer** but instead engineers will ensure through automated end-to-end tests that the quality of the product is ensured. Another role not present is a **DevOps engineer** - engineers of this team will be responsible to setup the infrastructure themselves. 
-
-## Time / scope / budget planning
-
-todo
 
 ## Technology considerations
 
@@ -140,3 +135,32 @@ The following goals are considered for the technologies chosen:
 - **GPT OpenAPI** access is required so we can utilise its API for our custom chatbot.
 - **Google Analytics** is used for reporting on user metrics and usage behaviour. [Google Analytics](https://marketingplatform.google.com/intl/en_uk/about/analytics/) is set up in the frontend (with opt-in cookie consent banner) to send usage metrics to Google that will be useful to us to make UX decisions.
 - **PagerDuty** (optional) once we have configured alerts via AlertManager in Prometheus, we also want to know when our app goes down. This becomes especially important once we launch in multiple regions, as there could be issues at 3am local time and one of our engineers would need to be woken up to have a look.
+
+
+## Time / scope / budget planning
+
+### Costs
+
+> Note: for the sake of this exercise and to keep things simple, all salary costs are average salaries paid in United Kingdom, sourced from [Glassdoor](https://www.glassdoor.co.uk/Salaries). Prices are converted to USD using [Xe](https://www.xe.com/currencyconverter/).
+> 
+> ChatGPT has been used to calculate the rough estimation figure for the AWS Cloud bill, assuming DAU of 10000 with 100-150 requests per day.
+>
+> ChatGPT has been used to calculate the rough estimation figure for the OpenAI bill, 1000 users interacting with the chat bot on a daily basis with a conversation length of 1 minute.
+
+This project breaks down costs as follows:
+
+| Category | Description              | Estimated Cost (per year) | Notes                                 |
+|----------|--------------------------|---------------------------|---------------------------------------|
+| Salary   | Senior Product Engineer  | $79k                      |                                       |
+| Salary   | Techlead                 | $120k                     |                                       |
+| Salary   | Senior Software Engineer | $100k                     |                                       |
+| Salary   | Senior Software Engineer | $100k                     |                                       |
+| License  | PagerDuty                | $0                        | Free Plan (up to 5 users)             |
+| License  | Google Analytics         | $0                        | Free                                  |
+| License  | Github                   | $200                      | Team Plan ($4 per user/month)         |
+| Cost     | Github                   | $500                      | Github usage.                         |
+| Cost     | AWS                      | $35k                      | rough estimation of yearly cloud bill |
+| Cost     | OpenAI                   | $30k                      |                                       |
+
+**Grand Total**: $364k per year. To be pessimistic, we can double this figure, equalling to roughly $700k. Given a joined pre-seed and seed funding of $2M, this would give us a runway of 2 years.
+
