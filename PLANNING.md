@@ -8,7 +8,7 @@ In order to get the most value of the product early, this project launches in a 
 
 The first milestone allows users to sign up and login, and then to create **public** workshops. In addition, users will be able to browse and sign up for workshops. In this milestone, organizers can provide details about requirements for their workshop, such as materials, but also other requirements such as age requirements or allergy requirements. Users will be able to set up requirements in their profile, too, such as allergies and inventory they own. Once people signed up for a workshop, they get access to a workshop specific chat room where they can discuss the workshop.
 
-**Values unlocked:** 
+**Values unlocked:**
 
 - building a community
 - users getting familiar with product
@@ -59,7 +59,7 @@ This milestone allows users to customize a set of interests and discover public 
 
 ## M4: Gamification & Social Improvements
 
- This milestone also starts gamifying the product by introducing workshop points & leagues. Gaining enough points during a month allows to rise up to the next league. Successfully attending a workshop grants the user points that get attributed not only to the user but also are assigned to the interests of the workshop they attended. People can view the league system and filter by interests to discover amazing people.
+This milestone also starts gamifying the product by introducing workshop points & leagues. Gaining enough points during a month allows to rise up to the next league. Successfully attending a workshop grants the user points that get attributed not only to the user but also are assigned to the interests of the workshop they attended. People can view the league system and filter by interests to discover amazing people.
 To further improve ways to build stronger communities, additional social features are built such as friend system (one can see which public workshops your friends attend) and private messages.
 
 **Values unlocked:**
@@ -92,7 +92,7 @@ This milestone will unlock additional revenue streams by launching in more count
 
 The idea is to minimise time to market and maximise velocity. Therefore, time cannot spent on mentoring and onboarding originally, so the team will be kept small but efficient. To avoid disruption due to illness or other factors, there are a total of 3 engineers required. This is crucial, especially for QA purposes.
 
-Also note that there are some familiar roles missing here: this team does not hire a dedicated **QA engineer** but instead engineers will ensure through automated end-to-end tests that the quality of the product is ensured. Another role not present is a **DevOps engineer** - engineers of this team will be responsible to setup the infrastructure themselves. 
+Also note that there are some familiar roles missing here: this team does not hire a dedicated **QA engineer** but instead engineers will ensure through automated end-to-end tests that the quality of the product is ensured. Another role not present is a **DevOps engineer** - engineers of this team will be responsible to setup the infrastructure themselves.
 
 ## Technology considerations
 
@@ -120,7 +120,7 @@ The following goals are considered for the technologies chosen:
 - **Vault** this project requires storing a lot of secret information, such as API keys and credentials. Those should never be committed to version control - instead, it will be stored in [Vault](https://www.vaultproject.io/) which Terraform neatly integrates with.
 - **MySQL 8** this product uses MySQL 8 which comes with powerful indexing algorithms and is natively supported by Amazon RDS.
 - **Amazon Web Services** this project will be deployed to Amazon Web Services. With its cloud architecture we can deploy our stack into various datacenter regions all around the globe to minimise latency. Originally using the `eu-west-1` location:
-  - [AWS Fargate](https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html) for containerization of apps. Fargate is slightly more expensive than ECS (but can be still cheaper than running a fully fledged Kubernetes cluster): 
+  - [AWS Fargate](https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html) for containerization of apps. Fargate is slightly more expensive than ECS (but can be still cheaper than running a fully fledged Kubernetes cluster):
     1. no need to manage any infrastructure. This also means no need to manage scaling EC2 groups up or down depending on load. Fargate manages that
     2. faster setup. Rather than spending time both building a complicated deployment setup, Fargate takes away that pain
     3. neat integration into other AWS services: we want to potentially harness other services such as Amazon S3 for blob storage, Route53 for domain routing setup and EC2 for load balancing and WAF DDOS protection
@@ -141,13 +141,14 @@ The following goals are considered for the technologies chosen:
 - Milestone based kanban style
 - Developers write and pickup tickets themselves with assistance of Product Engineer to prioritise things
 - Programming principles to be considered: Clean Code where applicable (pragmatic approach, not theoretical approach), prefer component testing (snapshots) & e2e over unit testing to save time but write unit tests for critical components where needed. Composition over inheritance. Avoid design patterns and over engineering if possible - keep it simple!
+- Environments: we will follow a promotional build strategy where we deploy features from a dev environment into a staging environment and then deploy to production.
 
 ## Time / scope / budget planning
 
 ### Costs
 
 > Note: for the sake of this exercise and to keep things simple, all salary costs are average salaries paid in United Kingdom, sourced from [Glassdoor](https://www.glassdoor.co.uk/Salaries). Prices are converted to USD using [Xe](https://www.xe.com/currencyconverter/).
-> 
+>
 > ChatGPT has been used to calculate the rough estimation figure for the AWS Cloud bill, assuming DAU of 10000 with 100-150 requests per day.
 >
 > ChatGPT has been used to calculate the rough estimation figure for the OpenAI bill, 1000 users interacting with the chat bot on a daily basis with a conversation length of 1 minute.
@@ -155,7 +156,7 @@ The following goals are considered for the technologies chosen:
 This project breaks down costs as follows:
 
 | Category | Description              | Estimated Cost (per year) | Notes                                 |
-|----------|--------------------------|---------------------------|---------------------------------------|
+| -------- | ------------------------ | ------------------------- | ------------------------------------- |
 | Salary   | Senior Product Engineer  | $79k                      |                                       |
 | Salary   | Techlead                 | $120k                     |                                       |
 | Salary   | Senior Software Engineer | $100k                     |                                       |
@@ -168,4 +169,3 @@ This project breaks down costs as follows:
 | Cost     | OpenAI                   | $30k                      |                                       |
 
 **Grand Total**: $364k per year. To be pessimistic, we can double this figure, equalling to roughly $700k. Given a joined pre-seed and seed funding of $2M, this would give us a runway of 2 years.
-
