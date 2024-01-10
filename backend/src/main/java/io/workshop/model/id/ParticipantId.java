@@ -1,11 +1,12 @@
 package io.workshop.model.id;
 
 import jakarta.persistence.Embeddable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.io.Serializable;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 @Data
 @Embeddable

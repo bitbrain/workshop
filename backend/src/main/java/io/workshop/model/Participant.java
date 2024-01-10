@@ -1,15 +1,22 @@
 package io.workshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.workshop.model.id.ParticipantId;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Builder
 @Entity
 @Table(name = "participant")
 public class Participant {
+
+    @JsonIgnore
     @EmbeddedId
     private ParticipantId id;
 

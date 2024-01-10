@@ -2,12 +2,18 @@ package io.workshop.model;
 
 import io.workshop.model.id.OrganizerId;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 @Table(name = "organizer")
 public class Organizer {
     @EmbeddedId

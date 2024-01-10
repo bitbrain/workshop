@@ -7,6 +7,7 @@
 - **Participant** has always _one_ user and each user can relate to _many_ participants. In addition, each participant can only ever participate in a single workshop at a time, but each workshop can have multiple participants. Whenever a user signs up for a new workshop, this would result in a new participant model. This model can be used to also track the status of the participation.
 - **Organizer** has always _one_ user associated with it and each user can be an organizer of _many_ workshops. The organizer model tracks the status of the organization. For example, in case one of the organizers gets sick, another organizer can jump in and this can be reflected by its status accordingly.
 - **WorkshopRequirement** tracks a specific need or prerequisite for a given workshop. A workshop does not have to specify requirements but in case they do, users will be made aware of it before becoming a participant in said workshop. This also allows for better filtering of workshops that match the users requirements. Note: this model simplifies the functionality of requirements but in future, requirements could be added to the `Organizer` too, so each organizer could bring their own set of requirements, especially useful when organizing larger workshops with multiple organizers.
+- **Activity** is an activity that is done as part of a workshop and each workshop defines a list of activities.
 
 ## High Level Architecture
 
