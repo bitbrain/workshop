@@ -48,7 +48,7 @@ public class WorkshopController {
 
     @GetMapping("/generate-activities/{topic}")
     public List<String> generateActivities(@PathVariable("topic") final String topic) {
-        return openAIService.generateActivitiesForTopic(topic);
+        return openAIService.generateActivitiesForTopic(topic, 3);
     }
 
 }

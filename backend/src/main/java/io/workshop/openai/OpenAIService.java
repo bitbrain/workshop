@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 @Component
 public class OpenAIService {
 
-    private static final String PROMPT_TEMPLATE = "Generate a list of engaging and interactive activities for a workshop focused on %s.";
+    private static final String PROMPT_TEMPLATE = "Generate a list of %s engaging and interactive activities for a workshop focused on %s.";
     private static final String AUTH_HEADER_TEMPLATE = "Bearer %s";
 
     private final OpenAiProperties openAiProperties;
     private final RestTemplate restTemplate;
 
-    public List<String> generateActivitiesForTopic(final String topic) {
+    public List<String> generateActivitiesForTopic(final String topic, final int numberOfActivities) {
 
         final var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -37,7 +37,7 @@ public class OpenAIService {
         body.put("messages", List.of(
                 new HashMap() {{
                     put("role", "user");
-                    put("content", PROMPT_TEMPLATE.formatted(topic));
+                    put("content", PROMPT_TEMPLATE.formatted(numberOfActivities, topic));
                 }}
         ));
 
