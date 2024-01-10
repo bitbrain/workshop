@@ -2,9 +2,11 @@ package io.workshop.web;
 
 import io.workshop.model.Participant;
 import io.workshop.model.Workshop;
+import io.workshop.model.WorkshopActivity;
 import io.workshop.model.id.ParticipantId;
 import io.workshop.openai.OpenAIService;
 import io.workshop.repository.ParticipantRepository;
+import io.workshop.repository.WorkshopActivityRepository;
 import io.workshop.repository.WorkshopRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -28,6 +30,7 @@ public class WorkshopController {
     private final WorkshopRepository workshopRepository;
     private final ParticipantRepository participantRepository;
     private final OpenAIService openAIService;
+    private final WorkshopActivityRepository workshopActivityRepository;
 
     @GetMapping
     public ResponseEntity<List<Workshop>> listWorkshops() {
@@ -47,8 +50,22 @@ public class WorkshopController {
     }
 
     @GetMapping("/generate-activities/{topic}")
-    public List<String> generateActivities(@PathVariable("topic") final String topic) {
+    public List<WorkshopActivity> generateActivitiesForTopic(@PathVariable("topic") final String topic) {
         return openAIService.generateActivitiesForTopic(topic, 3);
+    }
+
+    @GetMapping("/{id}/generate-activities")
+    public ResponseEntity<List<WorkshopActivity>> generateActivities(@PathVariable("id") final Integer workshopId) {
+        final var workshop = workshopRepository.findById(workshopId);
+        if (workshop.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        final var activities = openAIService.generateActivitiesForTopic(workshop.get().getName(), 3)
+                .stream()
+                .peek(activity -> activity.setWorkshop(workshop.get()))
+                .toList();
+        final var savedActivities = workshopActivityRepository.saveAll(activities);
+        return ResponseEntity.ok(savedActivities);
     }
 
 }

@@ -1,5 +1,6 @@
 package io.workshop.openai;
 
+import io.workshop.model.WorkshopActivity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +26,7 @@ public class OpenAIService {
     private final OpenAiProperties openAiProperties;
     private final RestTemplate restTemplate;
 
-    public List<String> generateActivitiesForTopic(final String topic, final int numberOfActivities) {
+    public List<WorkshopActivity> generateActivitiesForTopic(final String topic, final int numberOfActivities) {
 
         final var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -54,6 +55,17 @@ public class OpenAIService {
                     .map(text -> text.split("\n\n"))
                     .flatMap(Arrays::stream)
                     .map(s -> s.replaceAll("^\\d+\\.\\s+", "").trim())
+                    .map(s -> {
+                        // each suggestion looks like sometext: othertext format
+                        // so we need to split it by ': '
+                        final var sections = s.split(": ");
+                        final var name = sections[0];
+                        final var description = sections[1];
+                        return WorkshopActivity.builder()
+                                .name(name)
+                                .description(description)
+                                .build();
+                    })
                     .collect(Collectors.toList());
         } catch (HttpClientErrorException.TooManyRequests clientError) {
             System.out.println("Quota expired!" + clientError.getMessage());

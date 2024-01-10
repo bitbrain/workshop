@@ -8,6 +8,7 @@ services:
       MYSQL_DATABASE: workshop
       MYSQL_USER: user
       MYSQL_PASSWORD: password
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
     ports:
       - "3306:3306"
     volumes:
