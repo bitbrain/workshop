@@ -3,6 +3,7 @@ package io.workshop.web;
 import io.workshop.model.Participant;
 import io.workshop.model.Workshop;
 import io.workshop.model.id.ParticipantId;
+import io.workshop.openai.OpenAIService;
 import io.workshop.repository.ParticipantRepository;
 import io.workshop.repository.WorkshopRepository;
 import jakarta.transaction.Transactional;
@@ -26,6 +27,7 @@ public class WorkshopController {
 
     private final WorkshopRepository workshopRepository;
     private final ParticipantRepository participantRepository;
+    private final OpenAIService openAIService;
 
     @GetMapping
     public ResponseEntity<List<Workshop>> listWorkshops() {
@@ -43,4 +45,10 @@ public class WorkshopController {
     public ResponseEntity<List<Participant>> getParticipants(@PathVariable("id") final Integer workshopId) {
         return ResponseEntity.ok(participantRepository.findByWorkshopId(workshopId));
     }
+
+    @GetMapping("/generate-activities/{topic}")
+    public List<String> generateActivities(@PathVariable("topic") final String topic) {
+        return openAIService.generateActivitiesForTopic(topic);
+    }
+
 }

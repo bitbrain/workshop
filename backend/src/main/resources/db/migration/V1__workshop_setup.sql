@@ -15,6 +15,16 @@ CREATE TABLE IF NOT EXISTS `workshop` (
     `modified_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS `workshop_activity` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `workshop_id` INT NOT NULL,
+    `name` VARCHAR(100) NOT NULL,
+    `description` TEXT,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `modified_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+     FOREIGN KEY (`workshop_id`) REFERENCES `workshop`(`id`)
+);
+
 CREATE TABLE IF NOT EXISTS `participant` (
     `workshop_id` INT NOT NULL,
     `user_id` INT NOT NULL,
